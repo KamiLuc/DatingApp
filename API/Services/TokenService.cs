@@ -7,15 +7,11 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace API.Services;
 
-public class TokenService : ITokenService
+public class TokenService(IConfiguration config) : ITokenService
 {
-    private readonly SymmetricSecurityKey _key;
-    private readonly int _tokenValidity;
-    public TokenService(IConfiguration config)
-    {
-        _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
-        _tokenValidity = Int32.Parse(config["TokenValidity"]);
-    }
+    private readonly SymmetricSecurityKey _key = new(Encoding.UTF8.GetBytes(config["TokenKey"]));
+    private readonly int _tokenValidity = int.Parse(config["TokenValidity"]);
+
     public string CreateToken(AppUser user)
     {
         var claims = new List<Claim>
