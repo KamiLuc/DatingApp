@@ -1,0 +1,45 @@
+<div class="nav-wrapper">
+	<nav>
+		<div class="nav-left-container">
+			<div class="logo">DatingApp</div>
+			<ul *ngIf="logged" class="nav-left-container">
+				<li>Matches</li>
+				<li>Lists</li>
+				<li>Messages</li>
+			</ul>
+		</div>
+		<div class="nav-right-container">
+			<form
+				*ngIf="!logged"
+				#loginForm="ngForm"
+				(ngSubmit)="login()"
+				autocomplete="off"
+			>
+				<input
+					name="userName"
+					[(ngModel)]="model.userName"
+					type="text"
+					class="form-control"
+					placeholder="Username"
+				/>
+				<input
+					name="password"
+					[(ngModel)]="model.password"
+					type="password"
+					class="form-control"
+					placeholder="Password"
+				/>
+				<button type="submit" class="btn btn-primary btn-lg">
+					Login
+				</button>
+			</form>
+			<button
+				*ngIf="logged"
+				(click)="logout()"
+				class="btn btn-primary btn-lg"
+			>
+				Logout
+			</button>
+		</div>
+	</nav>
+</div>
