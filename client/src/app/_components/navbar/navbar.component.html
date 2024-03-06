@@ -9,6 +9,36 @@
 			</ul>
 		</div>
 		<div class="nav-right-container">
+			<div *ngIf="logged" class="btn-group" dropdown>
+				<button
+					id="button-animated"
+					dropdownToggle
+					type="button"
+					class="btn btn-primary dropdown-toggle"
+					aria-controls="dropdown-animated"
+				>
+					Account <span class="caret"></span>
+				</button>
+				<ul
+					id="dropdown-animated"
+					*dropdownMenu
+					class="dropdown-menu dropdown-menu-end"
+					role="menu"
+					aria-labelledby="button-animated"
+				>
+					<li role="menuitem">
+						<a class="dropdown-item" href="#">Action</a>
+					</li>
+					<li role="menuitem">
+						<a class="dropdown-item" href="#">Another action</a>
+					</li>
+					<li role="menuitem">
+						<a class="dropdown-item" href="#"
+							>Something else here</a
+						>
+					</li>
+				</ul>
+			</div>
 			<form
 				*ngIf="!logged"
 				#loginForm="ngForm"
@@ -29,17 +59,8 @@
 					class="form-control"
 					placeholder="Password"
 				/>
-				<button type="submit" class="btn btn-primary btn-lg">
-					Login
-				</button>
+				<button type="submit" class="btn btn-primary btn">Login</button>
 			</form>
-			<button
-				*ngIf="logged"
-				(click)="logout()"
-				class="btn btn-primary btn-lg"
-			>
-				Logout
-			</button>
 		</div>
 	</nav>
 </div>

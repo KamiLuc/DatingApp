@@ -22,16 +22,6 @@ nav {
 	color: gray;
 	font-weight: bold;
 
-	li:nth-child(4) {
-		color: white;
-	}
-
-	li:hover {
-		cursor: pointer;
-		color: #007bff;
-		transition: color 0.3s ease;
-	}
-
 	.logo {
 		color: white;
 		display: flex;
@@ -41,22 +31,41 @@ nav {
 		font-size: 1.5em;
 		padding-bottom: 8px;
 	}
+
+	li:hover {
+		cursor: pointer;
+		color: #007bff;
+		transition: color 0.3s ease;
+	}
 }
 
 .nav-right-container {
 	display: flex;
 	align-items: center;
-}
 
-form {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: calc(var(--navbar-padding) / 3);
-}
+	form {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: calc(var(--navbar-padding) / 3);
+	}
 
-button {
-	font-size: 1em;
-	border-radius: 15px;
-	min-width: 88px;
+	button {
+		border-radius: 15px;
+		min-width: 20%;
+	}
+
+	.dropdown-menu {
+		margin-top: 5%;
+		min-width: 250px;
+
+		.dropdown-item {
+			font-weight: bold;
+		}
+
+		.dropdown-item:hover {
+			color: #007bff;
+			transition: color 0.3s ease;
+		}
+	}
 }
