@@ -2,14 +2,21 @@
 	<nav>
 		<div class="nav-left-container">
 			<div class="logo">DatingApp</div>
-			<ul *ngIf="logged" class="nav-left-container">
+			<ul
+				*ngIf="accountService.currentUser$ | async"
+				class="nav-left-container"
+			>
 				<li>Matches</li>
 				<li>Lists</li>
 				<li>Messages</li>
 			</ul>
 		</div>
 		<div class="nav-right-container">
-			<div *ngIf="logged" class="btn-group" dropdown>
+			<div
+				*ngIf="accountService.currentUser$ | async"
+				class="btn-group"
+				dropdown
+			>
 				<button
 					id="button-animated"
 					dropdownToggle
@@ -37,10 +44,15 @@
 							>Something else here</a
 						>
 					</li>
+					<li role="menuitem">
+						<a class="dropdown-item" href="#" (click)="logout()"
+							>Logout</a
+						>
+					</li>
 				</ul>
 			</div>
 			<form
-				*ngIf="!logged"
+				*ngIf="!(accountService.currentUser$ | async)"
 				#loginForm="ngForm"
 				(ngSubmit)="login()"
 				autocomplete="off"

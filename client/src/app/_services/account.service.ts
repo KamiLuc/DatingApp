@@ -7,10 +7,11 @@ import { User } from '../_dtos/user';
 	providedIn: 'root',
 })
 export class AccountService {
-	private currentUserSource = new BehaviorSubject<User | null>(null);
+	private readonly userLS = 'user';
+	private readonly currentUserSource = new BehaviorSubject<User | null>(null);
+	private readonly baseUrl = 'https://localhost:5001/api/';
 
-	currentUser$ = this.currentUserSource.asObservable();
-	baseUrl = 'https://localhost:5001/api/';
+	readonly currentUser$ = this.currentUserSource.asObservable();
 
 	constructor(private readonly httpClient: HttpClient) {}
 
@@ -21,7 +22,7 @@ export class AccountService {
 				map((response: User) => {
 					const user = response;
 					if (user) {
-						localStorage.setItem('user', JSON.stringify(user));
+						localStorage.setItem(this.userLS, JSON.stringify(user));
 						this.currentUserSource.next(user);
 					}
 				})
@@ -29,13 +30,12 @@ export class AccountService {
 	}
 
 	logout() {
-		localStorage.removeItem('user');
+		localStorage.removeItem(this.userLS);
 		this.currentUserSource.next(null);
 	}
 
-	setRememberedUser() {
+	setUserFromLocalStorage() {
 		let user = this.getCurrentUserFromLocalStorage();
-
 		if (user) {
 			this.setCurrentUser(user);
 		}
@@ -46,11 +46,9 @@ export class AccountService {
 	}
 
 	private getCurrentUserFromLocalStorage(): User | null {
-		const userJson: string | null = localStorage.getItem('user');
-
+		const userJson: string | null = localStorage.getItem(this.userLS);
 		if (userJson) {
 			const user: User | null = JSON.parse(userJson);
-
 			if (user) {
 				return user;
 			}

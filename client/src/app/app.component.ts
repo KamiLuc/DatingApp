@@ -26,6 +26,6 @@ export class AppComponent implements OnInit {
 			},
 		});
 
-		this.accountService.setRememberedUser();
+		this.accountService.setUserFromLocalStorage();
 	}
 }

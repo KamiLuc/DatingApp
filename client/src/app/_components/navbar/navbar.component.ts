@@ -15,9 +15,8 @@ import { AccountService } from 'src/app/_services/account.service';
 })
 export class NavbarComponent implements OnInit {
 	model: any = {};
-	logged: boolean = false;
 
-	constructor(private readonly accountService: AccountService) {}
+	constructor(readonly accountService: AccountService) {}
 
 	ngOnInit(): void {}
 
@@ -25,7 +24,6 @@ export class NavbarComponent implements OnInit {
 		this.accountService.login(this.model).subscribe({
 			next: (response) => {
 				console.log(response);
-				this.logged = true;
 			},
 			error: (error) => {
 				console.log(error);
@@ -34,6 +32,6 @@ export class NavbarComponent implements OnInit {
 	}
 
 	logout() {
-		this.logged = false;
+		this.accountService.logout();
 	}
 }
