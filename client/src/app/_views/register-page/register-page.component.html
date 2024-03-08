@@ -1,1 +1,46 @@
-<p>register-page works!</p>
+<form
+	class="credentials-form"
+	#registerForm="ngForm"
+	(ngSubmit)="register()"
+	autocomplete="off"
+>
+	<h1 class="text-primary">Sign up</h1>
+	<div>
+		<label for="inputEmail" class="form-label">Email address </label>
+		<input
+			[(ngModel)]="model.userName"
+			type="email"
+			class="form-control"
+			id="inputEmail"
+			name="email"
+		/>
+	</div>
+	<div>
+		<label for="inputPassword" class="form-label">Password </label>
+		<input
+			[(ngModel)]="model.password"
+			type="password"
+			class="form-control"
+			id="inputPassword"
+			name="password"
+		/>
+	</div>
+	<div>
+		<label for="genderFormSelect" class="form-label">Gender </label>
+		<select
+			class="form-select"
+			aria-label="Default select example"
+			id="genderFormSelect"
+		>
+			<option selected>I don't want to say</option>
+			<option value="1">Woman</option>
+			<option value="2">Man</option>
+		</select>
+	</div>
+	<div class="buttons-container">
+		<button type="submit" class="btn btn-success">Submit</button>
+		<button type="button" class="btn btn-default" (click)="cancel()">
+			Cancel
+		</button>
+	</div>
+</form>
