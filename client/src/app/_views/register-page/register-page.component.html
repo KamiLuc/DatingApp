@@ -1,44 +1,80 @@
 <form
 	class="credentials-form"
-	#registerForm="ngForm"
 	(ngSubmit)="register()"
 	autocomplete="off"
+	[formGroup]="registerForm"
 >
 	<h1 class="text-primary">Sign up</h1>
 	<div>
 		<label for="inputEmail" class="form-label">Email address </label>
 		<input
-			[(ngModel)]="model.userName"
+			formControlName="email"
 			type="email"
 			class="form-control"
 			id="inputEmail"
 			name="email"
+			[ngClass]="
+				!(emailFormField.valid || !emailFormField.touched)
+					? 'is-invalid'
+					: ''
+			"
 		/>
+		<div class="invalid-feedback">Invalid email address</div>
 	</div>
 	<div>
 		<label for="inputPassword" class="form-label">Password </label>
 		<input
-			[(ngModel)]="model.password"
+			formControlName="password"
 			type="password"
 			class="form-control"
 			id="inputPassword"
 			name="password"
+			[ngClass]="
+				!(passwordFormField?.valid || !passwordFormField?.touched)
+					? 'is-invalid'
+					: ''
+			"
 		/>
-	</div>
-	<div>
-		<label for="genderFormSelect" class="form-label">Gender </label>
-		<select
-			class="form-select"
-			aria-label="Default select example"
-			id="genderFormSelect"
+		<div class="invalid-feedback">Password should contain at least:</div>
+		<div
+			*ngIf="!passwordFormField?.value?.match('.{8,}')"
+			class="invalid-feedback"
 		>
-			<option selected>I don't want to say</option>
-			<option value="1">Woman</option>
-			<option value="2">Man</option>
-		</select>
+			Eight characters
+		</div>
+		<div
+			*ngIf="!passwordFormField?.value?.match('^(?=.*[A-Z])')"
+			class="invalid-feedback"
+		>
+			One uppercase character
+		</div>
+		<div
+			*ngIf="!passwordFormField?.value?.match('(?=.*[a-z])')"
+			class="invalid-feedback"
+		>
+			One lowercase character
+		</div>
+		<div
+			*ngIf="!passwordFormField?.value?.match('(.*[0-9].*)')"
+			class="invalid-feedback"
+		>
+			One digit
+		</div>
+		<div
+			*ngIf="!passwordFormField?.value?.match('(?=.*[!@#$%^&*])')"
+			class="invalid-feedback"
+		>
+			One special character
+		</div>
 	</div>
 	<div class="buttons-container">
-		<button type="submit" class="btn btn-success">Submit</button>
+		<button
+			type="submit"
+			class="btn btn-success"
+			[disabled]="!registerForm.valid"
+		>
+			Submit
+		</button>
 		<button type="button" class="btn btn-default" (click)="cancel()">
 			Cancel
 		</button>
