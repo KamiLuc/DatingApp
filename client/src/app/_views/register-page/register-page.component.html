@@ -30,7 +30,7 @@
 			id="inputPassword"
 			name="password"
 			[ngClass]="
-				!(passwordFormField?.valid || !passwordFormField?.touched)
+				!passwordFormField.valid && passwordFormField.touched
 					? 'is-invalid'
 					: ''
 			"
@@ -66,6 +66,26 @@
 		>
 			One special character
 		</div>
+	</div>
+	<div>
+		<label for="inputConfirmPassword" class="form-label"
+			>Confirm password
+		</label>
+		<input
+			formControlName="confirmPassword"
+			type="password"
+			class="form-control"
+			id="inputConfirmPassword"
+			name="confirmPassword"
+			[ngClass]="
+				passwordMatchError &&
+				confirmPasswordFormField.touched &&
+				confirmPasswordFormField.value != ''
+					? 'is-invalid'
+					: ''
+			"
+		/>
+		<div class="invalid-feedback">Passwords are not the same</div>
 	</div>
 	<div class="buttons-container">
 		<button

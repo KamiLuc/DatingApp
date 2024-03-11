@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+	AbstractControl,
+	FormControl,
+	FormGroup,
+	Validators,
+} from '@angular/forms';
 import { StrongPasswordRegx } from 'src/app/_utils/regexes/regexes';
 
 @Component({
@@ -8,18 +13,35 @@ import { StrongPasswordRegx } from 'src/app/_utils/regexes/regexes';
 	styleUrls: ['./register-page.component.scss'],
 })
 export class RegisterPageComponent implements OnInit {
-	registerForm = new FormGroup({
-		email: new FormControl('', [Validators.required, Validators.email]),
-		password: new FormControl('', [
-			Validators.required,
-			Validators.minLength(8),
-			Validators.pattern(StrongPasswordRegx),
-		]),
-	});
+	registerForm = new FormGroup(
+		{
+			email: new FormControl('', [Validators.required, Validators.email]),
+			password: new FormControl('', [
+				Validators.required,
+				Validators.minLength(8),
+				Validators.pattern(StrongPasswordRegx),
+			]),
+			confirmPassword: new FormControl('', [Validators.required]),
+		},
+		{
+			validators: this.passwordMatchValidator,
+		}
+	);
 
 	constructor() {}
 
 	ngOnInit(): void {}
+
+	passwordMatchValidator(control: AbstractControl) {
+		return control.get('password')?.value ===
+			control.get('confirmPassword')?.value
+			? null
+			: { passwordMismatch: true };
+	}
+
+	get passwordMatchError(): boolean {
+		return this.registerForm.hasError('passwordMismatch');
+	}
 
 	register() {
 		console.log(this.registerForm.value);
@@ -30,7 +52,11 @@ export class RegisterPageComponent implements OnInit {
 	}
 
 	get passwordFormField() {
-		return this.registerForm.get('password');
+		return this.registerForm.get('password')!;
+	}
+
+	get confirmPasswordFormField() {
+		return this.registerForm.get('confirmPassword')!;
 	}
 
 	get emailFormField() {
