@@ -1,25 +1,3 @@
-.main-container {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	gap: 20px;
-
-	h1 {
-		text-align: center;
-		font-weight: 400;
-	}
-
-	p {
-		text-align: center;
-	}
-}
-
-.buttons-container {
-	display: flex;
-	justify-content: center;
-	gap: 20px;
-
-	button {
-		min-width: 80px;
-	}
+button {
+	min-width: 100px;
 }
