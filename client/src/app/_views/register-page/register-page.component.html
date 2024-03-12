@@ -1,102 +1,124 @@
-<form
-	class="credentials-form"
-	(ngSubmit)="register()"
-	autocomplete="off"
-	[formGroup]="registerForm"
->
-	<h1 class="text-primary">Sign up</h1>
-	<div>
-		<label for="inputEmail" class="form-label">Email address </label>
-		<input
-			formControlName="email"
-			type="email"
-			class="form-control"
-			id="inputEmail"
-			name="email"
-			[ngClass]="
-				!(emailFormField.valid || !emailFormField.touched)
-					? 'is-invalid'
-					: ''
-			"
-		/>
-		<div class="invalid-feedback">Invalid email address</div>
+<div class="container">
+	<div class="row d-flex justify-content-center">
+		<div class="col-md-6">
+			<form
+				(ngSubmit)="register()"
+				autocomplete="off"
+				[formGroup]="registerForm"
+				class="d-flex flex-column justify-content-space-between gap-3"
+			>
+				<h1 class="text-primary text-center">Sign up</h1>
+				<div>
+					<label for="inputEmail" class="form-label"
+						>Email address
+					</label>
+					<input
+						formControlName="email"
+						type="email"
+						class="form-control"
+						id="inputEmail"
+						[ngClass]="
+							!emailFormField.valid && emailFormField.touched
+								? 'is-invalid'
+								: ''
+						"
+					/>
+					<div class="invalid-feedback">Invalid email address</div>
+				</div>
+				<div>
+					<label for="inputPassword" class="form-label"
+						>Password
+					</label>
+					<input
+						formControlName="password"
+						type="password"
+						class="form-control"
+						id="inputPassword"
+						name="password"
+						[ngClass]="
+							!passwordFormField.valid &&
+							passwordFormField.touched
+								? 'is-invalid'
+								: ''
+						"
+					/>
+					<div class="invalid-feedback">
+						Password should contain at least:
+					</div>
+					<div
+						*ngIf="!passwordFormField?.value?.match('.{8,}')"
+						class="invalid-feedback"
+					>
+						Eight characters
+					</div>
+					<div
+						*ngIf="!passwordFormField?.value?.match('^(?=.*[A-Z])')"
+						class="invalid-feedback"
+					>
+						One uppercase character
+					</div>
+					<div
+						*ngIf="!passwordFormField?.value?.match('(?=.*[a-z])')"
+						class="invalid-feedback"
+					>
+						One lowercase character
+					</div>
+					<div
+						*ngIf="!passwordFormField?.value?.match('(.*[0-9].*)')"
+						class="invalid-feedback"
+					>
+						One digit
+					</div>
+					<div
+						*ngIf="
+							!passwordFormField?.value?.match('(?=.*[!@#$%^&*])')
+						"
+						class="invalid-feedback"
+					>
+						One special character
+					</div>
+				</div>
+				<div>
+					<label for="inputConfirmPassword" class="form-label"
+						>Confirm password
+					</label>
+					<input
+						formControlName="confirmPassword"
+						type="password"
+						class="form-control"
+						id="inputConfirmPassword"
+						name="confirmPassword"
+						[ngClass]="
+							passwordMatchError &&
+							confirmPasswordFormField.touched &&
+							confirmPasswordFormField.value
+								? 'is-invalid'
+								: ''
+						"
+					/>
+					<div class="invalid-feedback">
+						Passwords are not the same
+					</div>
+				</div>
+				<div class="container mt-3">
+					<div class="d-flex justify-content-center gap-3">
+						<button
+							type="submit"
+							class="btn btn-success btn"
+							[disabled]="!registerForm.valid"
+						>
+							Submit
+						</button>
+						<button
+							type="button"
+							class="btn btn-secondary btn"
+							(click)="cancel()"
+						>
+							Cancel
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
-	<div>
-		<label for="inputPassword" class="form-label">Password </label>
-		<input
-			formControlName="password"
-			type="password"
-			class="form-control"
-			id="inputPassword"
-			name="password"
-			[ngClass]="
-				!passwordFormField.valid && passwordFormField.touched
-					? 'is-invalid'
-					: ''
-			"
-		/>
-		<div class="invalid-feedback">Password should contain at least:</div>
-		<div
-			*ngIf="!passwordFormField?.value?.match('.{8,}')"
-			class="invalid-feedback"
-		>
-			Eight characters
-		</div>
-		<div
-			*ngIf="!passwordFormField?.value?.match('^(?=.*[A-Z])')"
-			class="invalid-feedback"
-		>
-			One uppercase character
-		</div>
-		<div
-			*ngIf="!passwordFormField?.value?.match('(?=.*[a-z])')"
-			class="invalid-feedback"
-		>
-			One lowercase character
-		</div>
-		<div
-			*ngIf="!passwordFormField?.value?.match('(.*[0-9].*)')"
-			class="invalid-feedback"
-		>
-			One digit
-		</div>
-		<div
-			*ngIf="!passwordFormField?.value?.match('(?=.*[!@#$%^&*])')"
-			class="invalid-feedback"
-		>
-			One special character
-		</div>
-	</div>
-	<div>
-		<label for="inputConfirmPassword" class="form-label"
-			>Confirm password
-		</label>
-		<input
-			formControlName="confirmPassword"
-			type="password"
-			class="form-control"
-			id="inputConfirmPassword"
-			name="confirmPassword"
-			[ngClass]="
-				passwordMatchError &&
-				confirmPasswordFormField.touched &&
-				confirmPasswordFormField.value
-					? 'is-invalid'
-					: ''
-			"
-		/>
-		<div class="invalid-feedback">Passwords are not the same</div>
-	</div>
-	<div class="buttons-container">
-		<button
-			type="submit"
-			class="btn btn-success"
-			[disabled]="!registerForm.valid"
-		>
-			Submit
-		</button>
-		<button type="button" class="btn btn-default" (click)="cancel()">
-			Cancel
-		</button>
-	</div>
-</form>
+</div>
