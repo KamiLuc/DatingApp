@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { User } from '../_dtos/user';
+import { RegisterUserDto } from '../_dtos/registerUser.dto';
 
 @Injectable({
 	providedIn: 'root',
@@ -25,6 +26,20 @@ export class AccountService {
 						localStorage.setItem(this.userLS, JSON.stringify(user));
 						this.currentUserSource.next(user);
 					}
+				})
+			);
+	}
+
+	register(user: RegisterUserDto) {
+		return this.httpClient
+			.post<User>(this.baseUrl + 'account/register', user)
+			.pipe(
+				map((user) => {
+					if (user) {
+						localStorage.setItem('user', JSON.stringify(user));
+						this.setCurrentUser(user);
+					}
+					return user;
 				})
 			);
 	}

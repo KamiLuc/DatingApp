@@ -11,6 +11,10 @@ nav {
 	padding: 0px var(--navbar-padding) 0px var(--navbar-padding);
 	height: var(--navbar-height);
 	font-size: 1em;
+
+	.active-link {
+		color: #007bff;
+	}
 }
 
 .nav-left-container {
@@ -30,9 +34,10 @@ nav {
 		font-weight: bold;
 		font-size: 1.5em;
 		padding-bottom: 5px;
+		cursor: pointer;
 	}
 
-	li:hover {
+	.nav-link:hover {
 		cursor: pointer;
 		color: #007bff;
 		transition: color 0.3s ease;

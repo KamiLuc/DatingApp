@@ -5,6 +5,9 @@ import {
 	FormGroup,
 	Validators,
 } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { RegisterUserDto } from 'src/app/_dtos/registerUser.dto';
+import { AccountService } from 'src/app/_services/account.service';
 import { StrongPasswordRegx } from 'src/app/_utils/regexes/regexes';
 
 @Component({
@@ -15,7 +18,10 @@ import { StrongPasswordRegx } from 'src/app/_utils/regexes/regexes';
 export class RegisterPageComponent implements OnInit {
 	registerForm = new FormGroup(
 		{
-			email: new FormControl('', [Validators.required, Validators.email]),
+			userName: new FormControl('', [
+				Validators.required,
+				Validators.minLength(5),
+			]),
 			password: new FormControl('', [
 				Validators.required,
 				Validators.minLength(8),
@@ -28,7 +34,10 @@ export class RegisterPageComponent implements OnInit {
 		}
 	);
 
-	constructor() {}
+	constructor(
+		private accountService: AccountService,
+		private readonly toastr: ToastrService
+	) {}
 
 	ngOnInit(): void {}
 
@@ -44,7 +53,17 @@ export class RegisterPageComponent implements OnInit {
 	}
 
 	register() {
-		console.log(this.registerForm.value);
+		const user: RegisterUserDto = {
+			userName: this.userNameFormField.value!,
+			password: this.passwordFormField.value!,
+		};
+
+		this.accountService.register(user).subscribe({
+			next: (respone) => {
+				console.log(respone);
+			},
+			error: (error) => this.toastr.error(error.error),
+		});
 	}
 
 	cancel() {
@@ -59,7 +78,7 @@ export class RegisterPageComponent implements OnInit {
 		return this.registerForm.get('confirmPassword')!;
 	}
 
-	get emailFormField() {
-		return this.registerForm.get('email')!;
+	get userNameFormField() {
+		return this.registerForm.get('userName')!;
 	}
 }

@@ -1,14 +1,42 @@
 <div class="nav-wrapper">
 	<nav>
 		<div class="nav-left-container">
-			<div class="logo">JustRent.It</div>
+			<div class="logo">
+				<a
+					class="nav-link"
+					routerLink="/home"
+					routerLinkActive="active-link"
+					>DatingApp</a
+				>
+			</div>
 			<ul
 				*ngIf="accountService.currentUser$ | async"
 				class="nav-left-container"
 			>
-				<li>Matches</li>
-				<li>Lists</li>
-				<li>Messages</li>
+				<li>
+					<a
+						class="nav-link"
+						routerLink="/members"
+						routerLinkActive="active-link"
+						>Matches</a
+					>
+				</li>
+				<li>
+					<a
+						class="nav-link"
+						routerLink="/lists"
+						routerLinkActive="active-link"
+						>Lists</a
+					>
+				</li>
+				<li>
+					<a
+						class="nav-link"
+						routerLink="/messages"
+						routerLinkActive="active-link"
+						>Messages</a
+					>
+				</li>
 			</ul>
 		</div>
 		<div class="nav-right-container">

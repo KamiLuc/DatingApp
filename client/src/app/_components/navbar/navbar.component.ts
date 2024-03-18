@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
+import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
@@ -16,7 +17,10 @@ import { AccountService } from 'src/app/_services/account.service';
 export class NavbarComponent implements OnInit {
 	model: any = {};
 
-	constructor(readonly accountService: AccountService) {}
+	constructor(
+		readonly accountService: AccountService,
+		private readonly toastrService: ToastrService
+	) {}
 
 	ngOnInit(): void {}
 
@@ -26,7 +30,7 @@ export class NavbarComponent implements OnInit {
 				console.log(response);
 			},
 			error: (error) => {
-				console.log(error);
+				this.toastrService.error(error.error);
 			},
 		});
 	}

@@ -9,21 +9,21 @@
 			>
 				<h1 class="text-primary text-center">Sign up</h1>
 				<div>
-					<label for="inputEmail" class="form-label"
-						>Email address
-					</label>
+					<label for="userName" class="form-label">Username </label>
 					<input
-						formControlName="email"
-						type="email"
+						formControlName="userName"
 						class="form-control"
-						id="inputEmail"
+						id="userName"
 						[ngClass]="
-							!emailFormField.valid && emailFormField.touched
+							!userNameFormField.valid &&
+							userNameFormField.touched
 								? 'is-invalid'
 								: ''
 						"
 					/>
-					<div class="invalid-feedback">Invalid email address</div>
+					<div class="invalid-feedback">
+						Username has to contain at least 5 characters
+					</div>
 				</div>
 				<div>
 					<label for="inputPassword" class="form-label"
@@ -43,7 +43,7 @@
 						"
 					/>
 					<div class="invalid-feedback">
-						Password should contain at least:
+						Password has to contain at least:
 					</div>
 					<div
 						*ngIf="!passwordFormField?.value?.match('.{8,}')"
